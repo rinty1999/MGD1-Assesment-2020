@@ -42,20 +42,46 @@
 	
 	var isKeyPressed = false;
 	
-	var imgCrate = new Image();
-	var boxes = [];
+	var imgPavement = new Image();
+	var pavements = [];
 	
-	var buttonX = [33,100];
-	var buttonY = [71,71];
-	var buttonWidth = [44,44];
-	var buttonHeight = [44,44];
+	var imgObstacles = new Image();
+	var obstacles = [];
+	
+	var imgDumpTruck = new Image();
+	var dumpTruck = [];
+	
+	var imgFence = new Image();
+	var fence = [];
+	
+	var imgOilSpill = new Image();
+	var oilSpill = [];
+	
+	var imgPage = new Image();
+	var page = [];
+	
+	var pageWidth = 30;
+	var pageHeight = 30;
+	
+	var buttonX = [10,600];
+	var buttonY = [210,210];
+	
+	var buttonWidth = [44,10];
+	var buttonHeight = [44,10];
 	
 	var mouseX;
 	var mouseY;
 	var playImage = new Image();
 	var quit = new Image();
 	
+	var homescreenImage = new Image();
+	
 	var buttonClicked = 0;
+	
+	var score = 0;
+	var health = 100;
+	
+	var rotation = 0;
 	
 	window.addEventListener("load", function () {
 		
@@ -71,30 +97,350 @@
 		ctx.font = "20px Impact";
 		ctx.fillStyle = "green";
 		ctx.textAlign = "center";
-		ctx.fillText("Health:", 30, 20);
+		ctx.fillText("Health: "+health, 650, 20);
 		
 		ctx.font = "20px Impact";
 		ctx.fillStyle = "red";
 		ctx.textAlign = "center";
-		ctx.fillText("Score:", 200, 20);
+		ctx.fillText("Pages: "+score+"/5", 900, 20);
+		
+		ctx.font = "20px Impact";
+		ctx.fillStyle = "red";
+		ctx.textAlign = "center";
+		ctx.fillText("Running Late", 55, 20);
 		
 		img.src = 'braidSpriteSheet.png';
 		
-		img.src = 'braidSpriteSheet.png'
-		imgCrate.src = 'RTS_Crate_0.png';
+		img.src = 'braidSpriteSheet.png';
+		imgPavement.src = 'pavement.jpg';
+		imgObstacles.src = 'crate.png';
+		imgDumpTruck.src = 'truck.png';
+		imgFence.src = 'fence.png';
+		imgOilSpill.src = 'oilspill.png';
+		imgPage.src = 'page.png';
+		//imgPage1.src = 'download.jpg';
 
-		boxes.push({
+		pavements.push({
 			x: 0,
 			y: 30,
 			width: 1000,
-			height: 20
+			height: 40
 		});
-		boxes.push({
+		pavements.push({
 			x: 0,
-			y: 380,
+			y: 360,
 			width: 1000,
+			height: 40
+		});
+		
+		obstacles.push ({
+			x: 100,
+			y: 130,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 100,
+			y: 165,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 100,
+			y: 200,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 150,
+			y: 330,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 150,
+			y: 295,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 380,
+			y: 70,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 380,
+			y: 105,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 315,
+			y: 330,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 460,
+			y: 200,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 460,
+			y: 235,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 460,
+			y: 270,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 640,
+			y: 70,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 640,
+			y: 105,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 640,
+			y: 140,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 750,
+			y: 200,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 750,
+			y: 235,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 750,
+			y: 270,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 900,
+			y: 70,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 935,
+			y: 70,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 935,
+			y: 105,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 900,
+			y: 330,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 900,
+			y: 295,
+			width: 30,
+			height: 30
+		});
+		
+		obstacles.push ({
+			x: 935,
+			y: 295,
+			width: 30,
+			height: 30
+		});
+		
+		dumpTruck.push ({
+			x: 290,
+			y: 150,
+			width: 110,
+			height: 65
+		});
+		
+		fence.push ({
+			x: 200,
+			y: 150,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 200,
+			y: 90,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 320,
+			y: 270,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 500,
+			y: 70,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 580,
+			y: 300,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 580,
+			y: 235,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 755,
+			y: 70,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 840,
+			y: 70,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 840,
+			y: 135,
+			width: 20,
+			height: 60
+		});
+		
+		fence.push ({
+			x: 870,
+			y: 300,
+			width: 20,
+			height: 60
+		});
+		
+		oilSpill.push ({
+			x: 200,
+			y: 305,
+			width: 100,
+			height: 50
+		});
+		
+		oilSpill.push ({
+			x: 530,
+			y: 75,
+			width: 100,
+			height: 50
+		});
+		
+		oilSpill.push ({
+			x: 670,
+			y: 310,
+			width: 75,
+			height: 40
+		});
+		
+		oilSpill.push ({
+			x: 875,
+			y: 150,
+			width: 100,
+			height: 50
+		});
+		
+		//5
+		page.push ({
+			x: 940,
+			y: 230,
+			width: 20,
 			height: 20
 		});
+		
+		//4
+		page.push ({
+			x: 760,
+			y: 320,
+			width: 20,
+			height: 20
+		});
+		
+		//3
+		page.push ({
+			x: 800,
+			y: 85,
+			width: 20,
+			height: 20
+		});
+		
+		//2
+		page.push ({
+			x: 450,
+			y: 85,
+			width: 20,
+			height: 20
+		});
+		
+		//1
+		page.push ({
+			x: 70,
+			y: 320,
+			width: 20,
+			height: 20
+		});
+		
+		//ctx.rect(30, 20, 30, 30);
+		//ctx.drawImage(imgPage, 30, 20, 30, 30); 
 		
 		update();
 		
@@ -108,10 +454,16 @@
 	}
 
 	function update() {
-	if (keys[40]) {
+	
+	var angle = 0;
+	
+		if (keys[40]) {
 			// top arrow
 			if(player.y<(canvas.height-player.height-20))
 				player.velY++;
+				//angle -= 90;
+				//player.rotation(angle);
+				
 		}
 		if (keys[38]) {
 			// right arrow
@@ -151,12 +503,12 @@
 			ctx.drawImage(img, spriteWidth*2, spriteHeight*1, spriteWidth, spriteHeight, player.x, player.y, player.width, player.height);
 
 		
-		for (var i = 0; i < boxes.length; i++) {
-			// show the boxes on canvas
-			ctx.rect(boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
-			ctx.drawImage(imgCrate, boxes[i].x, boxes[i].y, boxes[i].width, boxes[i].height);
+		for (var i = 0; i < pavements.length; i++) {
+			// show the pavements on canvas
+			ctx.rect(pavements[i].x, pavements[i].y, pavements[i].width, pavements[i].height);
+			ctx.drawImage(imgPavement, pavements[i].x, pavements[i].y, pavements[i].width, pavements[i].height);
 			// check if collide with players
-			var dir = colCheck(player, boxes[i]);
+			var dir = colCheck(player, pavements[i]);
 
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
@@ -164,6 +516,117 @@
 				player.velY = 0;
 			}
 		}
+		
+		for (var i = 0; i < obstacles.length; i++) {
+			// show the obstacles on canvas
+			ctx.rect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+			ctx.drawImage(imgObstacles, obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+			// check if collide with players
+			var dir = colCheck(player, obstacles[i]);
+
+			if (dir === "l" || dir === "r") {
+				player.velX = 0;
+			} else if(dir === "t" || dir === "b"){
+				player.velY = 0;
+			}
+		}
+		
+		for (var i = 0; i < dumpTruck.length; i++) {
+			// show the truck on canvas
+			ctx.rect(dumpTruck[i].x, dumpTruck[i].y, dumpTruck[i].width, dumpTruck[i].height);
+			ctx.drawImage(imgDumpTruck, dumpTruck[i].x, dumpTruck[i].y, dumpTruck[i].width, dumpTruck[i].height);
+			// check if collide with players
+			var dir = colCheck(player, dumpTruck[i]);
+
+			if (dir === "l" || dir === "r") {
+				player.velX = 0;
+			} else if(dir === "t" || dir === "b"){
+				player.velY = 0;
+			}
+		}
+		
+		for (var i = 0; i < fence.length; i++) {
+			// show the fence on canvas
+			ctx.rect(fence[i].x, fence[i].y, fence[i].width, fence[i].height);
+			ctx.drawImage(imgFence, fence[i].x, fence[i].y, fence[i].width, fence[i].height);
+			// check if collide with players
+			var dir = colCheck(player, fence[i]);
+
+			if (dir === "l" || dir === "r") {
+				player.velX = 0;
+			} else if(dir === "t" || dir === "b"){
+				player.velY = 0;
+			}
+		}
+		
+		for (var i = 0; i < oilSpill.length; i++) {
+			// show the fence on canvas
+			ctx.rect(oilSpill[i].x, oilSpill[i].y, oilSpill[i].width, oilSpill[i].height);
+			ctx.drawImage(imgOilSpill, oilSpill[i].x, oilSpill[i].y, oilSpill[i].width, oilSpill[i].height);
+			// check if collide with players
+			var dir = colCheck(player, oilSpill[i]);
+
+			if (dir === "l" || dir === "r") {
+				player.velX = 0;
+				health = health - 10;
+			} else if(dir === "t" || dir === "b"){
+				player.velY = 0;
+				health = health - 10;
+			}
+		}
+		
+		for (var i = 0; i < page.length; i++) {
+			// show the fence on canvas
+			ctx.rect(page[i].x, page[i].y, page[i].width, page[i].height);
+			ctx.drawImage(imgPage, page[i].x, page[i].y, page[i].width, page[i].height);
+			// check if collide with players
+			var dir = colCheck(player, page[i]);
+
+			//if (colCheck(player, page[i])){
+				//score += 1;
+				//delete(page[i]);
+			//}
+			
+			if (dir === "l" || dir === "r") {
+				//player.velX = 0;
+				delete(page[0]);
+				score += 1;
+			} else if(dir === "t" || dir === "b"){
+				//player.velY = 0;
+				delete(page[0]);
+				score += 1;				
+			}
+		}
+		
+		//for (var i = 0; i < page[i]; i++) {
+			//if (colCheck(player, page[i])){
+				//score += 1;
+				//delete(page[i]);
+			//}
+		//}
+		
+		/*for (var i = 0; i < page2.length; i++) {
+			// show the fence on canvas
+			ctx.rect(page2[i].x, page2[i].y, page2[i].width, page2[i].height);
+			ctx.drawImage(imgPage1, page2[i].x, page2[i].y, page2[i].width, page2[i].height);
+			// check if collide with players
+			var dir = colCheck(player, page2[i]);
+
+			//if (colCheck(player, page[i])){
+				//score += 1;
+				//delete(page[i]);
+			//}
+			
+			if (dir === "l" || dir === "r") {
+				player.velX = 0;
+				delete(page2[i]);
+			} else if(dir === "t" || dir === "b"){
+				player.velY = 0;
+				delete(page2[i]);				
+			}
+		}*/
+		
+		
 
 
 	}
@@ -258,6 +721,12 @@
 	}
 	
 	function showMenu(){
+		
+		//homescreenImage.src = "tempHomescreen.png";
+		//homescreenImage.addEventListener('load', e => {
+			//ctx.drawImage(homescreenImage, 0, 0, 820, 428);
+		//});
+		
 		playImage.src = "playbutton.png";
 		playImage.addEventListener('load', e => {
 			ctx.drawImage(playImage, buttonX[0], buttonY[0], buttonWidth[0], buttonHeight[0]);
@@ -310,13 +779,17 @@
 		if(mouseX > buttonX[1] && mouseX < (buttonX[1] + buttonWidth[1]));{
 			if (mouseY > buttonY[1] && mouseY < (buttonY[1] + buttonHeight[1])) {
 				buttonClicked = 2;
-				//quitGame();
+				quitGame();
 			}
 		}
 		if (buttonClicked > 0){
 			canvas.removeEventListener("mousemove", checkPos);
 			canvas.removeEventListener("mouseup", checkClick);
 		}
+	}
+	
+	function quitGame(){
+		window.close();
 	}
 
 	
