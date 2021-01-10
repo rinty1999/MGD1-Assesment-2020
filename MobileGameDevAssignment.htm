@@ -83,6 +83,8 @@
 	
 	var rotation = 0;
 	
+	var playerTime = 0;
+	
 	window.addEventListener("load", function () {
 		
 		init();
@@ -94,20 +96,27 @@
 		//canvas.width = width;
 		//canvas.height = height;
 
-		ctx.font = "20px Impact";
+		ctx.font = "20px Calibri";
 		ctx.fillStyle = "green";
 		ctx.textAlign = "center";
-		ctx.fillText("Health: "+health, 650, 20);
+		ctx.fillText("Health: ", 650, 20);
 		
-		ctx.font = "20px Impact";
+		ctx.font = "20px Calibri";
 		ctx.fillStyle = "red";
 		ctx.textAlign = "center";
-		ctx.fillText("Pages: "+score+"/5", 900, 20);
+		ctx.fillText("Pages: ", 900, 20);
+		
+		//displayUI();
 		
 		ctx.font = "20px Impact";
 		ctx.fillStyle = "red";
 		ctx.textAlign = "center";
 		ctx.fillText("Running Late", 55, 20);
+		
+		ctx.font = "20px Calibri";
+		ctx.fillStyle = "blue";
+		ctx.textAlign = "center";
+		ctx.fillText(playerTime, 200, 20);
 		
 		img.src = 'braidSpriteSheet.png';
 		
@@ -455,6 +464,15 @@
 
 	function update() {
 	
+	//ctx.font = "20px Impact";
+	//ctx.fillStyle = "green";
+	//ctx.textAlign = "center";
+	//ctx.fillText("Health: "+health, 650, 20);
+	
+	//playerTime = time;
+	
+	//displayUI();
+	
 	var angle = 0;
 	
 		if (keys[40]) {
@@ -568,10 +586,18 @@
 
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
-				health = health - 10;
+				deleteHealth();
+				if(health >= 10){
+					health = health - 10;
+				}
+				displayHealth();
 			} else if(dir === "t" || dir === "b"){
 				player.velY = 0;
-				health = health - 10;
+				deleteHealth();
+				if(health >= 10){
+					health = health - 10;
+				}
+				displayHealth();
 			}
 		}
 		
@@ -589,12 +615,17 @@
 			
 			if (dir === "l" || dir === "r") {
 				//player.velX = 0;
-				delete(page[0]);
+				delete(page[i]);
+				deleteScore();
 				score += 1;
+				displayScore();
+				
 			} else if(dir === "t" || dir === "b"){
 				//player.velY = 0;
-				delete(page[0]);
-				score += 1;				
+				delete(page[i]);
+				deleteScore();
+				score += 1;	
+				displayScore();
 			}
 		}
 		
@@ -649,6 +680,46 @@
 		isKeyPressed = false;
 	});
 
+	
+	function displayScore()
+	{
+		
+		ctx.font = "20px Calibri";
+		ctx.fillStyle = "red";
+		ctx.textAlign = "center";
+		ctx.fillText(score, 940, 20);
+		
+	}
+	
+	function deleteScore()
+	{
+	
+		ctx.font = "20px Calibri";
+		ctx.fillStyle = "clear";
+		ctx.textAlign = "center";
+		ctx.fillText(score, 940, 20);
+	
+	}
+	
+	function displayHealth()
+	{
+		
+		ctx.font = "20px Calibri";
+		ctx.fillStyle = "green";
+		ctx.textAlign = "center";
+		ctx.fillText(health, 720, 20);
+		
+	}
+	
+	function deleteHealth()
+	{
+	
+		ctx.font = "20px Calibri";
+		ctx.fillStyle = "clear";
+		ctx.textAlign = "center";
+		ctx.fillText(health, 720, 20);
+	
+	}
 
 
 	function animationFrame(){
@@ -800,3 +871,4 @@
 </script>
 </body>
 </html>
+
