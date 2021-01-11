@@ -85,6 +85,11 @@
 	
 	var playerTime = 0;
 	
+	var offset = Date.now();
+	
+	var seconds = 0;
+	var minutes = 0;
+	
 	window.addEventListener("load", function () {
 		
 		init();
@@ -128,6 +133,8 @@
 		imgOilSpill.src = 'oilspill.png';
 		imgPage.src = 'page.png';
 		//imgPage1.src = 'download.jpg';
+		
+		//setInterval(increaseTime(), 1000);
 
 		pavements.push({
 			x: 0,
@@ -473,15 +480,21 @@
 	
 	//displayUI();
 	
-	playerTime = Date.now();
+	//playerTime = playerTime + 1;
 	
-	ctx.font = "20px Calibri";
-	ctx.fillStyle = "green";
-	ctx.textAlign = "center";
-	ctx.fillText(playerTime, 300, 20);
+	//ctx.font = "20px Calibri";
+	//ctx.fillStyle = "green";
+	//ctx.textAlign = "center";
+	//ctx.fillText(playerTime, 300, 20);
 	
-
-
+	increaseTime();
+	
+	deleteTime();
+	
+	displayTime();
+	
+	//setInterval(increaseTime(), 1);
+	
 	var angle = 0;
 	
 		if (keys[40]) {
@@ -599,6 +612,7 @@
 				if(health >= 10){
 					health = health - 10;
 				}
+				//deleteHealth();
 				displayHealth();
 			} else if(dir === "t" || dir === "b"){
 				player.velY = 0;
@@ -606,6 +620,7 @@
 				if(health >= 10){
 					health = health - 10;
 				}
+				//deleteHealth();
 				displayHealth();
 			}
 		}
@@ -671,6 +686,41 @@
 
 	}
 	
+	/*function timeDelta()
+	{
+	
+		setInterval(increaseTime(), 1000);
+	
+	}*/
+	
+	function deleteTime()
+	{
+	
+		ctx.font = "20px Calibri";
+		ctx.color = "white";
+		ctx.textAlign = "center";
+		ctx.fillText(seconds, 300, 20)
+	
+	}
+	
+	function displayTime()
+	{
+	
+		ctx.font = "20px Calibri";
+		ctx.fillStyle = "green";
+		ctx.textAlign = "center";
+		ctx.fillText(seconds.toFixed(0), 300, 20);
+	
+	}
+	
+	function increaseTime()
+	{
+	
+		playerTime = playerTime + 1;
+		seconds = playerTime / 100;
+	
+	}
+	
 	document.body.addEventListener("keydown", function (e) {
 		keys[e.keyCode] = true;
 	});
@@ -724,11 +774,14 @@
 	{
 	
 		ctx.font = "20px Calibri";
-		ctx.fillStyle = "clear";
+		ctx.color = "white";
+		//ctx.Alpha = 0;
 		ctx.textAlign = "center";
 		ctx.fillText(health, 720, 20);
 	
 	}
+	
+	
 
 
 	function animationFrame(){
