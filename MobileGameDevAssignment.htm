@@ -90,6 +90,8 @@
 	var seconds = 0;
 	var minutes = 0;
 	
+	var secondsInMinutes = 60;
+	
 	window.addEventListener("load", function () {
 		
 		init();
@@ -104,12 +106,12 @@
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "green";
 		ctx.textAlign = "center";
-		ctx.fillText("Health: ", 650, 20);
+		ctx.fillText("Health: "+ health, 650, 20);
 		
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "red";
 		ctx.textAlign = "center";
-		ctx.fillText("Pages: ", 900, 20);
+		ctx.fillText("Score: 0", 900, 20);
 		
 		//displayUI();
 		
@@ -489,9 +491,11 @@
 	
 	increaseTime();
 	
-	deleteTime();
+	//deleteTime();
 	
-	displayTime();
+	setInterval(displayTime(), 1000);
+	
+	//deleteTime();
 	
 	//setInterval(increaseTime(), 1);
 	
@@ -608,7 +612,7 @@
 
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
-				deleteHealth();
+				//deleteHealth();
 				if(health >= 10){
 					health = health - 10;
 				}
@@ -616,7 +620,7 @@
 				displayHealth();
 			} else if(dir === "t" || dir === "b"){
 				player.velY = 0;
-				deleteHealth();
+				//deleteHealth();
 				if(health >= 10){
 					health = health - 10;
 				}
@@ -640,14 +644,14 @@
 			if (dir === "l" || dir === "r") {
 				//player.velX = 0;
 				delete(page[i]);
-				deleteScore();
+				//deleteScore();
 				score += 1;
 				displayScore();
 				
 			} else if(dir === "t" || dir === "b"){
 				//player.velY = 0;
 				delete(page[i]);
-				deleteScore();
+				//deleteScore();
 				score += 1;	
 				displayScore();
 			}
@@ -693,24 +697,27 @@
 	
 	}*/
 	
-	function deleteTime()
-	{
+	//function deleteTime()
+	//{
 	
-		ctx.font = "20px Calibri";
-		ctx.color = "white";
-		ctx.textAlign = "center";
-		ctx.fillText(seconds, 300, 20)
+		//ctx.font = "20px Calibri";
+		//ctx.fillStyle = "rgba(0, 0, 0, 0.0)";
+		//ctx.textAlign = "center";
+		//ctx.fillText(seconds.toFixed(0), 300, 20);
+		
 	
-	}
+	//}
 	
 	function displayTime()
 	{
-	
+		
+		ctx.clearRect(280, 0, 320, 30);
 		ctx.font = "20px Calibri";
-		ctx.fillStyle = "green";
+		ctx.fillStyle = "black";
 		ctx.textAlign = "center";
-		ctx.fillText(seconds.toFixed(0), 300, 20);
-	
+		ctx.fillText(minutes +":"+seconds.toFixed(0), 300, 20);
+		
+		
 	}
 	
 	function increaseTime()
@@ -718,7 +725,7 @@
 	
 		playerTime = playerTime + 1;
 		seconds = playerTime / 100;
-	
+		
 	}
 	
 	document.body.addEventListener("keydown", function (e) {
@@ -742,15 +749,15 @@
 	
 	function displayScore()
 	{
-		
+		ctx.clearRect(920, 0, 940, 30);
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "red";
 		ctx.textAlign = "center";
-		ctx.fillText(score, 940, 20);
+		ctx.fillText(score, 925, 20);
 		
 	}
 	
-	function deleteScore()
+	/*function deleteScore()
 	{
 	
 		ctx.font = "20px Calibri";
@@ -758,19 +765,20 @@
 		ctx.textAlign = "center";
 		ctx.fillText(score, 940, 20);
 	
-	}
+	}*/
 	
 	function displayHealth()
 	{
 		
+		ctx.clearRect(665, 0, 100, 30);
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "green";
 		ctx.textAlign = "center";
-		ctx.fillText(health, 720, 20);
+		ctx.fillText(health, 680, 20);
 		
 	}
 	
-	function deleteHealth()
+	/*function deleteHealth()
 	{
 	
 		ctx.font = "20px Calibri";
@@ -779,7 +787,7 @@
 		ctx.textAlign = "center";
 		ctx.fillText(health, 720, 20);
 	
-	}
+	}*/
 	
 	
 
