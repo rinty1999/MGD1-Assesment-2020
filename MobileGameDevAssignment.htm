@@ -120,12 +120,12 @@
 		ctx.textAlign = "center";
 		ctx.fillText("Running Late", 55, 20);
 		
-		ctx.font = "20px Calibri";
+		/*ctx.font = "20px Calibri";
 		ctx.fillStyle = "blue";
 		ctx.textAlign = "center";
-		ctx.fillText(playerTime, 200, 20);
+		ctx.fillText(playerTime, 200, 20);*/
 		
-		img.src = 'braidSpriteSheet.png';
+		//img.src = 'braidSpriteSheet.png';
 		
 		img.src = 'braidSpriteSheet.png';
 		imgPavement.src = 'pavement.jpg';
@@ -499,6 +499,16 @@
 	
 	//setInterval(increaseTime(), 1);
 	
+	if(health <= 0)
+	{
+		
+		//ctx.globalAlpha = 0.0;
+		gameOver();
+		//deleteImages();
+		//ctx.globalAlpha = 0.0;
+	
+	}
+	
 	var angle = 0;
 	
 		if (keys[40]) {
@@ -713,18 +723,34 @@
 		
 		ctx.clearRect(280, 0, 320, 30);
 		ctx.font = "20px Calibri";
-		ctx.fillStyle = "black";
+		ctx.fillStyle = "blue";
 		ctx.textAlign = "center";
-		ctx.fillText(minutes +":"+seconds.toFixed(0), 300, 20);
-		
+		ctx.fillText("Time: "+minutes+":"+seconds.toFixed(0), 400, 20);
 		
 	}
 	
 	function increaseTime()
 	{
 	
-		playerTime = playerTime + 1;
-		seconds = playerTime / 100;
+		//playerTime = playerTime + 1;
+		//seconds = playerTime / 100;
+		
+		if(seconds > 60)
+		{
+		
+			playerTime = 100;
+			playerTime = playerTime + 1;
+			seconds = playerTime / 100;
+			minutes = minutes + 1;
+		
+		}
+		else
+		{
+		
+			playerTime = playerTime + 1;
+			seconds = playerTime / 100;
+		
+		}
 		
 	}
 	
@@ -789,7 +815,39 @@
 	
 	}*/
 	
+	function gameOver()
+	{
+		
+		ctx.clearRect(0, 0, width, height)
+		
+		/*img.src = '';
+		imgPavement.src = '';
+		imgObstacles.src = '';
+		imgDumpTruck.src = '';
+		imgFence.src = '';
+		imgOilSpill.src = '';;
+		imgPage.src = '';*/
+		
+		delete(page[0]);
+		delete(oilSpill[0]);
+		delete(dumpTruck[0]);
+		delete(obstacles[0]);
+		delete(fence[0]);
+		delete(pavements[0]);
+
+		ctx.font = "20px Impact";
+		ctx.fillStyle = "red";
+		ctx.textAlign = "center";
+		ctx.fillText("Game Over", 55, 20);
 	
+	}
+	
+	function deleteImages()
+	{
+	
+		//delete();
+	
+	}
 
 
 	function animationFrame(){
