@@ -63,18 +63,20 @@
 	var pageWidth = 30;
 	var pageHeight = 30;
 	
-	var buttonX = [10,600];
-	var buttonY = [210,210];
+	var buttonX = [10,600, 600];
+	var buttonY = [210,210, 20];
 	
-	var buttonWidth = [44,10];
-	var buttonHeight = [44,10];
+	var buttonWidth = [44,10,10];
+	var buttonHeight = [44,10,10];
 	
 	var mouseX;
 	var mouseY;
+	
 	var playImage = new Image();
+	var replayImage = new Image();
 	var quit = new Image();
 	
-	var homescreenImage = new Image();
+	//var homescreenImage = new Image();
 	
 	var buttonClicked = 0;
 	
@@ -91,6 +93,8 @@
 	var minutes = 0;
 	
 	var secondsInMinutes = 60;
+	
+	var game_over = false;
 	
 	window.addEventListener("load", function () {
 		
@@ -116,7 +120,7 @@
 		//displayUI();
 		
 		ctx.font = "20px Impact";
-		ctx.fillStyle = "red";
+		ctx.fillStyle = "black";
 		ctx.textAlign = "center";
 		ctx.fillText("Running Late", 55, 20);
 		
@@ -144,6 +148,7 @@
 			width: 1000,
 			height: 40
 		});
+		
 		pavements.push({
 			x: 0,
 			y: 360,
@@ -489,7 +494,7 @@
 	//ctx.textAlign = "center";
 	//ctx.fillText(playerTime, 300, 20);
 	
-	increaseTime();
+	//increaseTime();
 	
 	//deleteTime();
 	
@@ -506,6 +511,12 @@
 		gameOver();
 		//deleteImages();
 		//ctx.globalAlpha = 0.0;
+	
+	}
+	else
+	{
+	
+		increaseTime();
 	
 	}
 	
@@ -725,7 +736,7 @@
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "blue";
 		ctx.textAlign = "center";
-		ctx.fillText("Time: "+minutes+":"+seconds.toFixed(0), 400, 20);
+		ctx.fillText("Time: "+minutes+" : "+seconds.toFixed(0), 400, 20);
 		
 	}
 	
@@ -775,6 +786,7 @@
 	
 	function displayScore()
 	{
+	
 		ctx.clearRect(920, 0, 940, 30);
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "red";
@@ -818,7 +830,10 @@
 	function gameOver()
 	{
 		
+		game_over = true;
+		
 		ctx.clearRect(0, 0, width, height)
+		
 		
 		/*img.src = '';
 		imgPavement.src = '';
@@ -828,17 +843,42 @@
 		imgOilSpill.src = '';;
 		imgPage.src = '';*/
 		
-		delete(page[0]);
+		/*delete(page[0]);
 		delete(oilSpill[0]);
 		delete(dumpTruck[0]);
 		delete(obstacles[0]);
 		delete(fence[0]);
 		delete(pavements[0]);
+		img.src = '';*/
 
+		ctx.font = "20px Impact";
+		ctx.fillStyle = "black";
+		ctx.textAlign = "center";
+		ctx.fillText("Game Over", 55, 20);
+		
 		ctx.font = "20px Impact";
 		ctx.fillStyle = "red";
 		ctx.textAlign = "center";
-		ctx.fillText("Game Over", 55, 20);
+		ctx.fillText("Final Score: "+score, 200, 20);
+		
+		ctx.font = "20px Impact";
+		ctx.fillStyle = "blue";
+		ctx.textAlign = "center";
+		ctx.fillText("Time: "+minutes+" : "+seconds.toFixed(0), 350, 20);
+		
+		// Press enter to go back to menu
+		if(keys[13])
+		{
+			
+			location.reload();
+		
+		}
+		if(keys[27])
+		{
+		
+			quitGame();
+		
+		}
 	
 	}
 	
@@ -936,6 +976,11 @@
 			ctx.drawImage(quit, buttonX[1], buttonY[1], buttonWidth[1], buttonHeight[1]);
 		});
 		
+		/*replayImage.src = "playbutton.png";
+		replayImage.addEventListener('load', e => {
+			ctx.drawImage(replayImage, buttonX[2], buttonY[2], buttonWidth[2], buttonHeight[2]);
+		});*/
+		
 		canvas.addEventListener("mousemove", checkPos);
 		canvas.addEventListener("mouseup", checkClick);
 	}
@@ -981,6 +1026,13 @@
 				quitGame();
 			}
 		}
+		if(mouseX > buttonX[2] && mouseX < (buttonX[2] + buttonWidth[2]));{
+			if (mouseY > buttonY[2] && mouseY < (buttonY[2] + buttonHeight[2])) {
+				buttonClicked = 3;
+				startGame();
+			}
+		}
+		
 		if (buttonClicked > 0){
 			canvas.removeEventListener("mousemove", checkPos);
 			canvas.removeEventListener("mouseup", checkClick);
