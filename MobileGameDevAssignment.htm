@@ -63,11 +63,11 @@
 	var pageWidth = 30;
 	var pageHeight = 30;
 	
-	var buttonX = [10,600, 600];
-	var buttonY = [210,210, 20];
+	var buttonX = [100,300];
+	var buttonY = [300,300];
 	
-	var buttonWidth = [44,10,10];
-	var buttonHeight = [44,10,10];
+	var buttonWidth = [44,44];
+	var buttonHeight = [44,44];
 	
 	var mouseX;
 	var mouseY;
@@ -108,6 +108,8 @@
 	function startGame(){
 		//canvas.width = width;
 		//canvas.height = height;
+		
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "green";
@@ -478,102 +480,111 @@
 		buttonClicked = 0;
 	}
 
-	function update() {
-	
-	//ctx.font = "20px Impact";
-	//ctx.fillStyle = "green";
-	//ctx.textAlign = "center";
-	//ctx.fillText("Health: "+health, 650, 20);
-	
-	//playerTime = time;
-	
-	//displayUI();
-	
-	//playerTime = playerTime + 1;
-	
-	//ctx.font = "20px Calibri";
-	//ctx.fillStyle = "green";
-	//ctx.textAlign = "center";
-	//ctx.fillText(playerTime, 300, 20);
-	
-	//increaseTime();
-	
-	//deleteTime();
-	
-	setInterval(displayTime(), 1000);
-	
-	//deleteTime();
-	
-	//setInterval(increaseTime(), 1);
-	
-	/*if(page.length <= 0)
+	function update() 
 	{
 	
-		health = -10;
+		//ctx.font = "20px Impact";
+		//ctx.fillStyle = "green";
+		//ctx.textAlign = "center";
+		//ctx.fillText("Health: "+health, 650, 20);
 	
-	}*/
+		//playerTime = time;
 	
-	if(health <= 0)
-	{
-		
-		//ctx.globalAlpha = 0.0;
-		gameOver();
-		//deleteImages();
-		//ctx.globalAlpha = 0.0;
+		//displayUI();
 	
-	}
-	if(lastPageDeleted == true)
-	{
+		//playerTime = playerTime + 1;
 	
-		// Press enter to go back to menu
-		if(keys[13])
+		//ctx.font = "20px Calibri";
+		//ctx.fillStyle = "green";
+		//ctx.textAlign = "center";
+		//ctx.fillText(playerTime, 300, 20);
+	
+		//increaseTime();
+	
+		//deleteTime();
+	
+		setInterval(displayTime(), 1000);
+	
+		//deleteTime();
+	
+		//setInterval(increaseTime(), 1);
+	
+		/*if(page.length <= 0)
 		{
+		
+			health = -10;
+	
+		}*/
+	
+		if(health <= 0)
+		{
+		
+			lastPageDeleted == true;
+			//ctx.globalAlpha = 0.0;
+			gameOver();
+			//deleteImages();
+			//ctx.globalAlpha = 0.0;
+	
+		}
+		if(lastPageDeleted == true)
+		{
+	
+			// Press enter to go back to menu
+			if(keys[13])
+			{
 			
-			location.reload();
+				location.reload();
 		
+			}
+			// Press escape to quit game
+			if(keys[27])
+			{
+		
+				quitGame();
+		
+			}
+	
 		}
-		// Press escape to quit game
-		if(keys[27])
+		else
 		{
-		
-			quitGame();
-		
+	
+			increaseTime();
+	
 		}
 	
-	}
-	else
-	{
 	
-		increaseTime();
+		var angle = 0;
 	
-	}
-	
-	
-	var angle = 0;
-	
-		if (keys[40]) {
-			// top arrow
-			if(player.y<(canvas.height-player.height-20))
-				player.velY++;
-				//angle -= 90;
-				//player.rotation(angle);
+		if(lastPageDeleted == false)
+		{
+			if (keys[40]) 
+			{
+				// top arrow
+				if(player.y<(canvas.height-player.height-20))
+				{
+					player.velY++;
+					//angle -= 90;
+					//player.rotation(angle);
+				}
 				
-		}
-		if (keys[38]) {
-			// right arrow
-			if(player.y>40)
-				player.velY--;
-		}
-		if (keys[39]) {
-			// right arrow
-			if(player.x<(canvas.width-player.width-20))
-				player.velX++;
-		}
-		if (keys[37]) {
-			// left arrow
-			if(player.x>player.width)
-				player.velX--;
-		}
+			}
+			if (keys[38]) {
+				// right arrow
+				if(player.y>40)
+					player.velY--;
+			}
+			if (keys[39]) {
+				// right arrow
+				if(player.x<(canvas.width-player.width-20))
+					player.velX++;
+			}
+			if (keys[37]) {
+				// left arrow
+				if(player.x>player.width)
+					player.velX--;
+			}
+		
+		}	
 
 		player.velX *= friction;
 		player.velY *= friction;
@@ -1042,6 +1053,11 @@
 			//ctx.drawImage(homescreenImage, 0, 0, 820, 428);
 		//});
 		
+		ctx.font = "30px Impact";
+		ctx.fillStyle = "black";
+		ctx.textAlign = "center";
+		ctx.fillText("Running Late", 220, 40);
+		
 		playImage.src = "playbutton.png";
 		playImage.addEventListener('load', e => {
 			ctx.drawImage(playImage, buttonX[0], buttonY[0], buttonWidth[0], buttonHeight[0]);
@@ -1090,24 +1106,24 @@
 		}
 	
 	function checkClick(mouseEvent){
-		if(mouseX > buttonX[0] && mouseX < (buttonX[0] + buttonWidth[0]));{
+		if(mouseX > buttonX[0] && mouseX < (buttonX[0] + buttonWidth[0])){
 			if (mouseY > buttonY[0] && mouseY < (buttonY[0] + buttonHeight[0])) {
 				buttonClicked = 1;
 				startGame();
 			}
 		}
-		if(mouseX > buttonX[1] && mouseX < (buttonX[1] + buttonWidth[1]));{
+		if(mouseX > buttonX[1] && mouseX < (buttonX[1] + buttonWidth[1])){
 			if (mouseY > buttonY[1] && mouseY < (buttonY[1] + buttonHeight[1])) {
 				buttonClicked = 2;
 				quitGame();
 			}
 		}
-		if(mouseX > buttonX[2] && mouseX < (buttonX[2] + buttonWidth[2]));{
+		/*if(mouseX > buttonX[2] && mouseX < (buttonX[2] + buttonWidth[2]));{
 			if (mouseY > buttonY[2] && mouseY < (buttonY[2] + buttonHeight[2])) {
 				buttonClicked = 3;
 				startGame();
 			}
-		}
+		}*/
 		
 		if (buttonClicked > 0){
 			canvas.removeEventListener("mousemove", checkPos);
