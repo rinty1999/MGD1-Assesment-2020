@@ -96,6 +96,8 @@
 	
 	var game_over = false;
 	
+	var lastPageDeleted = false;
+	
 	window.addEventListener("load", function () {
 		
 		init();
@@ -504,6 +506,13 @@
 	
 	//setInterval(increaseTime(), 1);
 	
+	/*if(page.length <= 0)
+	{
+	
+		health = -10;
+	
+	}*/
+	
 	if(health <= 0)
 	{
 		
@@ -519,6 +528,7 @@
 		increaseTime();
 	
 	}
+	
 	
 	var angle = 0;
 	
@@ -664,19 +674,61 @@
 			
 			if (dir === "l" || dir === "r") {
 				//player.velX = 0;
-				delete(page[i]);
-				//deleteScore();
-				score += 1;
-				displayScore();
+				if(page[i] == page[0])
+				{
+				
+					score += 1;
+					delete(page[0]);
+					//score += 1;
+					gameOver();
+					
+				
+				}
+				else
+				{
+					delete(page[i]);
+					//deleteScore();
+					score += 1;
+					displayScore();
+					//increaseTime();
+				}
 				
 			} else if(dir === "t" || dir === "b"){
 				//player.velY = 0;
-				delete(page[i]);
+				/*delete(page[i]);
 				//deleteScore();
 				score += 1;	
-				displayScore();
+				displayScore();*/
+				
+				if(page[i] == page[0])
+				{
+				
+					score += 1;
+					delete(page[0]);
+					//score += 1;
+					gameOver();
+				
+				}
+				else
+				{
+					delete(page[i]);
+					//deleteScore();
+					score += 1;
+					displayScore();
+					//increaseTime();
+				}
+				
 			}
+				
+			
 		}
+		
+		
+		
+		
+		
+		
+		
 		
 		//for (var i = 0; i < page[i]; i++) {
 			//if (colCheck(player, page[i])){
@@ -746,22 +798,25 @@
 		//playerTime = playerTime + 1;
 		//seconds = playerTime / 100;
 		
-		if(seconds > 60)
-		{
 		
-			playerTime = 100;
-			playerTime = playerTime + 1;
-			seconds = playerTime / 100;
-			minutes = minutes + 1;
+			if(seconds > 60)
+			{
 		
-		}
-		else
-		{
+				playerTime = 100;
+				playerTime = playerTime + 1;
+				seconds = playerTime / 100;
+				minutes = minutes + 1;
 		
-			playerTime = playerTime + 1;
-			seconds = playerTime / 100;
+			}
+			else
+			{
 		
-		}
+				playerTime = playerTime + 1;
+				seconds = playerTime / 100;
+		
+			}
+		
+		
 		
 	}
 	
@@ -873,6 +928,7 @@
 			location.reload();
 		
 		}
+		// Press escape to quit game
 		if(keys[27])
 		{
 		
