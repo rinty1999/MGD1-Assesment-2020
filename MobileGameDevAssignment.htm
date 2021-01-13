@@ -56,6 +56,9 @@
 	// Using arrays to store objects used in the scene
 	var pavements = [];
 	
+	var imgBackGround = new Image();
+	var backgroundImage = [];
+	
 	var imgObstacles = new Image();
 	var obstacles = [];
 	
@@ -158,6 +161,7 @@
 		imgFence.src = 'fence.png';
 		imgOilSpill.src = 'oilspill.png';
 		imgPage.src = 'page.png';
+		imgBackGround.src = 'background.png';
 		
 		// Loading sounds to the correct new variable
 		_music = new gameSound("themesong.mp3");
@@ -182,6 +186,13 @@
 			y: 360,
 			width: 1000,
 			height: 40
+		});
+		
+		backgroundImage.push({
+			x: 0,
+			y: 30,
+			width: 1000,
+			height: 370
 		});
 		
 		obstacles.push ({
@@ -584,7 +595,9 @@
 					player.velX--;
 			}
 		
-		}	
+		}
+
+
 
 		player.velX *= friction;
 		player.velY *= friction;
@@ -599,6 +612,12 @@
 		ctx.fillStyle = "white";
 		// Based of the positions and scale set here
 		ctx.fillRect(player.x, player.y, player.width, player.height);
+		
+		for (var i = 0; i < backgroundImage.length; i++) {
+			// show the pavements on canvas
+			ctx.rect(backgroundImage[i].x, backgroundImage[i].y, backgroundImage[i].width, backgroundImage[i].height);
+			ctx.drawImage(imgBackGround, backgroundImage[i].x, backgroundImage[i].y, backgroundImage[i].width, backgroundImage[i].height);
+		}
 	
 		// Calls requestAnimationFrame method
 		requestAnimationFrame(update);
@@ -638,8 +657,10 @@
 			// If player collides then stops the player's velocity
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
+				
 			} else if(dir === "t" || dir === "b"){
 				player.velY = 0;
+				
 			}
 		}
 		
