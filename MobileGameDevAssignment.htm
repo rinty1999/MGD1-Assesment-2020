@@ -63,11 +63,11 @@
 	var pageWidth = 30;
 	var pageHeight = 30;
 	
-	var buttonX = [100,300];
-	var buttonY = [300,300];
+	var buttonX = [100,295];
+	var buttonY = [250,245];
 	
-	var buttonWidth = [44,44];
-	var buttonHeight = [44,44];
+	var buttonWidth = [44,54];
+	var buttonHeight = [44,54];
 	
 	var mouseX;
 	var mouseY;
@@ -97,6 +97,9 @@
 	var game_over = false;
 	
 	var lastPageDeleted = false;
+	
+	var _sound;
+	var _music;
 	
 	window.addEventListener("load", function () {
 		
@@ -145,6 +148,11 @@
 		//imgPage1.src = 'download.jpg';
 		
 		//setInterval(increaseTime(), 1000);
+		
+		_music = new gameSound("themesong.mp3");
+		_music.play();
+		
+		
 
 		pavements.push({
 			x: 0,
@@ -519,6 +527,7 @@
 		if(health <= 0)
 		{
 		
+			_music.stop();
 			lastPageDeleted == true;
 			//ctx.globalAlpha = 0.0;
 			gameOver();
@@ -528,6 +537,8 @@
 		}
 		if(lastPageDeleted == true)
 		{
+		
+			_music.stop();
 	
 			// Press enter to go back to menu
 			if(keys[13])
@@ -952,6 +963,8 @@
 		ctx.textAlign = "center";
 		ctx.fillText("Time: "+minutes+" : "+seconds.toFixed(0), 350, 20);
 		
+		
+		
 		// Press enter to go back to menu
 		if(keys[13])
 		{
@@ -969,10 +982,29 @@
 	
 	}
 	
-	function deleteImages()
+	function gameSound(src)
 	{
 	
-		//delete();
+		this.sound = document.createElement("audio");
+		this.sound.src = src;
+		this.sound.setAttribute("preload", "auto");
+		this.sound.setAttribute("controls", "none");
+		this.sound.style.display = "none";
+		document.body.appendChild(this.sound);
+		
+		this.play = function()
+		{
+		
+			this.sound.play();
+		
+		}
+		
+		this.stop = function()
+		{
+		
+			this.sound.pause();
+		
+		}
 	
 	}
 
@@ -1053,10 +1085,35 @@
 			//ctx.drawImage(homescreenImage, 0, 0, 820, 428);
 		//});
 		
-		ctx.font = "30px Impact";
+		ctx.font = "40px Impact";
 		ctx.fillStyle = "black";
 		ctx.textAlign = "center";
 		ctx.fillText("Running Late", 220, 40);
+		
+		ctx.font = "20px Impact";
+		ctx.fillStyle = "blue";
+		ctx.textAlign = "center";
+		ctx.fillText("Use the Arrow Keys to Move", 220, 100);
+		
+		ctx.font = "20px Impact";
+		ctx.fillStyle = "blue";
+		ctx.textAlign = "center";
+		ctx.fillText("Collect All of the Pages Before They Fly Away", 220, 150);
+		
+		ctx.font = "20px Impact";
+		ctx.fillStyle = "blue";
+		ctx.textAlign = "center";
+		ctx.fillText("Beware of the Dangerous Construction Site", 220, 200);
+		
+		ctx.font = "25px Impact";
+		ctx.fillStyle = "green";
+		ctx.textAlign = "center";
+		ctx.fillText("PLAY", 122, 325);
+		
+		ctx.font = "25px Impact";
+		ctx.fillStyle = "RED";
+		ctx.textAlign = "center";
+		ctx.fillText("QUIT", 322, 325);
 		
 		playImage.src = "playbutton.png";
 		playImage.addEventListener('load', e => {
