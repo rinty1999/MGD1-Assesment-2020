@@ -522,6 +522,25 @@
 		//ctx.globalAlpha = 0.0;
 	
 	}
+	if(lastPageDeleted == true)
+	{
+	
+		// Press enter to go back to menu
+		if(keys[13])
+		{
+			
+			location.reload();
+		
+		}
+		// Press escape to quit game
+		if(keys[27])
+		{
+		
+			quitGame();
+		
+		}
+	
+	}
 	else
 	{
 	
@@ -681,7 +700,7 @@
 					delete(page[0]);
 					//score += 1;
 					gameOver();
-					
+					lastPageDeleted = true;
 				
 				}
 				else
@@ -707,6 +726,7 @@
 					delete(page[0]);
 					//score += 1;
 					gameOver();
+					lastPageDeleted = true;
 				
 				}
 				else
