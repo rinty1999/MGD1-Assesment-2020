@@ -8,11 +8,14 @@
 <script>
 	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 	window.requestAnimationFrame = requestAnimationFrame;
-		
+	
+	// Delaring the variables
 	var canvas = document.getElementById("canvasForTheGame");
+	// Setting the dimensions of the window
 	var width = 1000;
 	var height = 400;
 	var ctx = canvas.getContext("2d");
+	// Setting variable values for the player
 	var player = {
 		x: width / 4,
 		y: height - 200,
@@ -21,9 +24,13 @@
 		velX: 0,
 		velY: 0
 	};
+	
+	// Declaring keys to use inputs later on
 	var keys = [];
+	
 	var friction = 0.8;
-
+	
+	// Setting the dimensions of the canvas
 	canvas.width = width;
 	canvas.height = height;
 
@@ -38,11 +45,15 @@
     var frameTimeMax = 0.017;	
     var spriteWidth = 74;
     var spriteHeight = 86;
+	
+	// Setting the variables for images and allowing for images to be assigned
     var img = new Image();
 	
+	// Setting a boolean to detect of a key is pressed
 	var isKeyPressed = false;
 	
 	var imgPavement = new Image();
+	// Using arrays to store objects used in the scene
 	var pavements = [];
 	
 	var imgObstacles = new Image();
@@ -60,47 +71,57 @@
 	var imgPage = new Image();
 	var page = [];
 	
+	// Setting dimensions for the collectables in game
 	var pageWidth = 30;
 	var pageHeight = 30;
 	
+	// Setting positions for the buttons used in the menu
 	var buttonX = [100,295];
 	var buttonY = [250,245];
 	
+	// Setting the position for the buttons
 	var buttonWidth = [44,54];
 	var buttonHeight = [44,54];
 	
+	// Creating variables for the mouse position
 	var mouseX;
 	var mouseY;
 	
+	// Creating varibales for the button images that will be assigned later
 	var playImage = new Image();
-	var replayImage = new Image();
 	var quit = new Image();
 	
-	//var homescreenImage = new Image();
-	
+	// Creating variable to store which button is pressed
 	var buttonClicked = 0;
 	
+	// Creating and setting initial values for the game
 	var score = 0;
 	var health = 100;
 	
-	var rotation = 0;
-	
+	// Creating and setting initial value for the player's time
 	var playerTime = 0;
 	
+	// Creating an offset based on the current time to create a timer later on
 	var offset = Date.now();
 	
+	// Creating and setting variables for the time that will be displayed 
 	var seconds = 0;
 	var minutes = 0;
 	
+	// Creating and setting a variable that will be used in a calculation
 	var secondsInMinutes = 60;
 	
+	// Creating a boolean that will be used to tell if the game is over
 	var game_over = false;
 	
+	// Creating a boolean that will be used to tell if the final page was collected
 	var lastPageDeleted = false;
 	
+	// Creating variables for the music and sound effects used in game
 	var _sound;
 	var _music;
 	
+	// Loads the init() and showMenu() function when the game is opened
 	window.addEventListener("load", function () {
 		
 		init();
@@ -109,11 +130,11 @@
 	});
 	
 	function startGame(){
-		//canvas.width = width;
-		//canvas.height = height;
 		
+		// Clears the canvas when startGame() is called
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+	
+		// Writing text that will display information to the player in game
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "green";
 		ctx.textAlign = "center";
@@ -124,20 +145,12 @@
 		ctx.textAlign = "center";
 		ctx.fillText("Score: 0", 900, 20);
 		
-		//displayUI();
-		
 		ctx.font = "20px Impact";
 		ctx.fillStyle = "black";
 		ctx.textAlign = "center";
 		ctx.fillText("Running Late", 55, 20);
 		
-		/*ctx.font = "20px Calibri";
-		ctx.fillStyle = "blue";
-		ctx.textAlign = "center";
-		ctx.fillText(playerTime, 200, 20);*/
-		
-		//img.src = 'braidSpriteSheet.png';
-		
+		// Loading images to the correct new variable
 		img.src = 'braidSpriteSheet.png';
 		imgPavement.src = 'pavement.jpg';
 		imgObstacles.src = 'crate.png';
@@ -145,20 +158,21 @@
 		imgFence.src = 'fence.png';
 		imgOilSpill.src = 'oilspill.png';
 		imgPage.src = 'page.png';
-		//imgPage1.src = 'download.jpg';
 		
-		//setInterval(increaseTime(), 1000);
-		
+		// Loading sounds to the correct new variable
 		_music = new gameSound("themesong.mp3");
 		_sound = new gameSound("pickup.mp3");
 		
+		// Plays the game music
 		_music.play();
 		
 		
-
+		// Creating the objects used in the scene: pavements, crates, fences, truck, oil spills and the collectables
 		pavements.push({
+			// Sets the positions
 			x: 0,
 			y: 30,
+			// Sets the dimensions of the object
 			width: 1000,
 			height: 40
 		});
@@ -476,9 +490,7 @@
 			height: 20
 		});
 		
-		//ctx.rect(30, 20, 30, 30);
-		//ctx.drawImage(imgPage, 30, 20, 30, 30); 
-		
+		// Calls Update()
 		update();
 		
 	}
@@ -492,56 +504,30 @@
 
 	function update() 
 	{
-	
-		//ctx.font = "20px Impact";
-		//ctx.fillStyle = "green";
-		//ctx.textAlign = "center";
-		//ctx.fillText("Health: "+health, 650, 20);
-	
-		//playerTime = time;
-	
-		//displayUI();
-	
-		//playerTime = playerTime + 1;
-	
-		//ctx.font = "20px Calibri";
-		//ctx.fillStyle = "green";
-		//ctx.textAlign = "center";
-		//ctx.fillText(playerTime, 300, 20);
-	
-		//increaseTime();
-	
-		//deleteTime();
-	
+		
+		// Calls displayTime() every second
 		setInterval(displayTime(), 1000);
 	
-		//deleteTime();
-	
-		//setInterval(increaseTime(), 1);
-	
-		/*if(page.length <= 0)
-		{
-		
-			health = -10;
-	
-		}*/
-	
+		// If the player's health reaches 0
 		if(health <= 0)
 		{
-		
+			
+			// Stops the music
 			_music.stop();
+			// Changes boolean value
 			lastPageDeleted == true;
-			//ctx.globalAlpha = 0.0;
+			// Calls gameOver()
 			gameOver();
-			//deleteImages();
-			//ctx.globalAlpha = 0.0;
 	
 		}
+		// If the last page has been collected
 		if(lastPageDeleted == true)
 		{
-		
+			
+			// Stops the music
 			_music.stop();
-	
+			
+			// Allows the player to use the keys to restart or quit game
 			// Press enter to go back to menu
 			if(keys[13])
 			{
@@ -558,26 +544,27 @@
 			}
 	
 		}
-		else
+		if(health > 0 && lastPageDeleted == false)
 		{
-	
+			// Keeps the timer going
+			// If the game is still on going
 			increaseTime();
 	
 		}
 	
-	
+		// Creates and sets the angle variable to 0
 		var angle = 0;
-	
+		
+		// If the game is still going
 		if(lastPageDeleted == false)
 		{
+			// Allows the player to use the arrow keys to move around the game scene
 			if (keys[40]) 
 			{
 				// top arrow
 				if(player.y<(canvas.height-player.height-20))
 				{
 					player.velY++;
-					//angle -= 90;
-					//player.rotation(angle);
 				}
 				
 			}
@@ -604,16 +591,19 @@
 		player.x += player.velX;
 		player.y += player.velY;
 
+		// Creates the player character in game
 		ctx.clearRect(0,20, width, height);
-		//ctx.drawImage(img, spriteWidth*frameX, spriteHeight*frameY, spriteWidth, spriteHeight, player.x, player.y, player.width, player.height);
 		ctx.fillStyle = "black";
 		ctx.beginPath();
 		ctx.fill();
 		ctx.fillStyle = "white";
+		// Based of the positions and scale set here
 		ctx.fillRect(player.x, player.y, player.width, player.height);
-
+	
+		// Calls requestAnimationFrame method
 		requestAnimationFrame(update);
 		
+		// When a key is pressed the animation will be played
 		if(isKeyPressed){
 			animationFrame();
 			ctx.drawImage(img, spriteWidth*frameX, spriteHeight*frameY, spriteWidth, spriteHeight, player.x, player.y, player.width, player.height);
@@ -621,13 +611,15 @@
 			ctx.drawImage(img, spriteWidth*2, spriteHeight*1, spriteWidth, spriteHeight, player.x, player.y, player.width, player.height);
 
 		
+		// Goes through each of the items in the array
 		for (var i = 0; i < pavements.length; i++) {
 			// show the pavements on canvas
 			ctx.rect(pavements[i].x, pavements[i].y, pavements[i].width, pavements[i].height);
 			ctx.drawImage(imgPavement, pavements[i].x, pavements[i].y, pavements[i].width, pavements[i].height);
 			// check if collide with players
 			var dir = colCheck(player, pavements[i]);
-
+			
+			// If player collides then stops the player's velocity
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
 			} else if(dir === "t" || dir === "b"){
@@ -635,13 +627,15 @@
 			}
 		}
 		
+		// Goes through each of the items in the array
 		for (var i = 0; i < obstacles.length; i++) {
 			// show the obstacles on canvas
 			ctx.rect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
 			ctx.drawImage(imgObstacles, obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
 			// check if collide with players
 			var dir = colCheck(player, obstacles[i]);
-
+			
+			// If player collides then stops the player's velocity
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
 			} else if(dir === "t" || dir === "b"){
@@ -649,13 +643,15 @@
 			}
 		}
 		
+		// Goes through each of the items in the array
 		for (var i = 0; i < dumpTruck.length; i++) {
 			// show the truck on canvas
 			ctx.rect(dumpTruck[i].x, dumpTruck[i].y, dumpTruck[i].width, dumpTruck[i].height);
 			ctx.drawImage(imgDumpTruck, dumpTruck[i].x, dumpTruck[i].y, dumpTruck[i].width, dumpTruck[i].height);
 			// check if collide with players
 			var dir = colCheck(player, dumpTruck[i]);
-
+			
+			// If player collides then stops the player's velocity
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
 			} else if(dir === "t" || dir === "b"){
@@ -663,13 +659,15 @@
 			}
 		}
 		
+		// Goes through each of the items in the array
 		for (var i = 0; i < fence.length; i++) {
 			// show the fence on canvas
 			ctx.rect(fence[i].x, fence[i].y, fence[i].width, fence[i].height);
 			ctx.drawImage(imgFence, fence[i].x, fence[i].y, fence[i].width, fence[i].height);
 			// check if collide with players
 			var dir = colCheck(player, fence[i]);
-
+			
+			// If player collides then stops the player's velocity
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
 			} else if(dir === "t" || dir === "b"){
@@ -677,188 +675,133 @@
 			}
 		}
 		
+		// Goes through each of the items in the array
 		for (var i = 0; i < oilSpill.length; i++) {
 			// show the fence on canvas
 			ctx.rect(oilSpill[i].x, oilSpill[i].y, oilSpill[i].width, oilSpill[i].height);
 			ctx.drawImage(imgOilSpill, oilSpill[i].x, oilSpill[i].y, oilSpill[i].width, oilSpill[i].height);
 			// check if collide with players
 			var dir = colCheck(player, oilSpill[i]);
-
+			
+			// If player collides then stops the player's velocity
 			if (dir === "l" || dir === "r") {
 				player.velX = 0;
-				//deleteHealth();
+				// Also takes away 10 health if the player still has health left
 				if(health >= 10){
 					health = health - 10;
 				}
-				//deleteHealth();
+				// Then updates the health total
 				displayHealth();
 			} else if(dir === "t" || dir === "b"){
 				player.velY = 0;
-				//deleteHealth();
 				if(health >= 10){
 					health = health - 10;
 				}
-				//deleteHealth();
 				displayHealth();
 			}
 		}
 		
+		// Goes through each of the items in the array
 		for (var i = 0; i < page.length; i++) {
 			// show the fence on canvas
 			ctx.rect(page[i].x, page[i].y, page[i].width, page[i].height);
 			ctx.drawImage(imgPage, page[i].x, page[i].y, page[i].width, page[i].height);
 			// check if collide with players
 			var dir = colCheck(player, page[i]);
-
-			//if (colCheck(player, page[i])){
-				//score += 1;
-				//delete(page[i]);
-			//}
 			
 			if (dir === "l" || dir === "r") {
-				//player.velX = 0;
+			
+				// If the page collected is the final page
 				if(page[i] == page[0])
 				{
-				
+					
+					// Adds to the player's score
 					score += 1;
+					// Plays sound effect
 					_sound.play();
+					// Deletes the page
 					delete(page[0]);
-					//score += 1;
+					// Calls gameOver()
 					gameOver();
+					// Sets variable to true
 					lastPageDeleted = true;
 				
 				}
 				else
 				{
+					// If it isn't the final page
+					// Deletes the page
 					delete(page[i]);
-					//deleteScore();
+					// Plays sound effect
 					_sound.play();
+					// Adds to the player's score
 					score += 1;
+					// Updates the player's score
 					displayScore();
-					//increaseTime();
+					
 				}
 				
 			} else if(dir === "t" || dir === "b"){
-				//player.velY = 0;
-				/*delete(page[i]);
-				//deleteScore();
-				score += 1;	
-				displayScore();*/
-				
+				// Same as previous segment
 				if(page[i] == page[0])
 				{
 				
 					_sound.play();
 					score += 1;
 					delete(page[0]);
-					//score += 1;
 					gameOver();
 					lastPageDeleted = true;
 				
 				}
 				else
 				{
+				
 					delete(page[i]);
-					//deleteScore();
 					_sound.play();
 					score += 1;
 					displayScore();
-					//increaseTime();
+
 				}
 				
 			}
 				
 			
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		//for (var i = 0; i < page[i]; i++) {
-			//if (colCheck(player, page[i])){
-				//score += 1;
-				//delete(page[i]);
-			//}
-		//}
-		
-		/*for (var i = 0; i < page2.length; i++) {
-			// show the fence on canvas
-			ctx.rect(page2[i].x, page2[i].y, page2[i].width, page2[i].height);
-			ctx.drawImage(imgPage1, page2[i].x, page2[i].y, page2[i].width, page2[i].height);
-			// check if collide with players
-			var dir = colCheck(player, page2[i]);
-
-			//if (colCheck(player, page[i])){
-				//score += 1;
-				//delete(page[i]);
-			//}
-			
-			if (dir === "l" || dir === "r") {
-				player.velX = 0;
-				delete(page2[i]);
-			} else if(dir === "t" || dir === "b"){
-				player.velY = 0;
-				delete(page2[i]);				
-			}
-		}*/
-		
-		
-
-
+	
 	}
-	
-	/*function timeDelta()
-	{
-	
-		setInterval(increaseTime(), 1000);
-	
-	}*/
-	
-	//function deleteTime()
-	//{
-	
-		//ctx.font = "20px Calibri";
-		//ctx.fillStyle = "rgba(0, 0, 0, 0.0)";
-		//ctx.textAlign = "center";
-		//ctx.fillText(seconds.toFixed(0), 300, 20);
-		
-	
-	//}
 	
 	function displayTime()
 	{
 		
+		// Clears the area where the time is displayed
 		ctx.clearRect(280, 0, 320, 30);
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "blue";
 		ctx.textAlign = "center";
+		// Writes out the player's time based on the x, y positions stated here
 		ctx.fillText("Time: "+minutes+" : "+seconds.toFixed(0), 400, 20);
 		
 	}
 	
 	function increaseTime()
 	{
-	
-		//playerTime = playerTime + 1;
-		//seconds = playerTime / 100;
-		
-		
-			if(seconds > 60)
+			// If the seconds variable is greater than 59
+			if(seconds > 59)
 			{
-		
+				
+				// Player time is set back to 100
 				playerTime = 100;
+				// Player time keeps counting 
 				playerTime = playerTime + 1;
+				// Player time is divided by 100 to get the number of seconds
 				seconds = playerTime / 100;
+				// 1 is added to the minutes variable
 				minutes = minutes + 1;
 		
 			}
 			else
 			{
-		
+				// Other wise keep player time counting
 				playerTime = playerTime + 1;
 				seconds = playerTime / 100;
 		
@@ -889,71 +832,40 @@
 	
 	function displayScore()
 	{
-	
+		
+		// Clears the area where the score is displayed
 		ctx.clearRect(920, 0, 940, 30);
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "red";
 		ctx.textAlign = "center";
+		// Writes the score value at the x, y positions stated here
 		ctx.fillText(score, 925, 20);
 		
 	}
 	
-	/*function deleteScore()
-	{
-	
-		ctx.font = "20px Calibri";
-		ctx.fillStyle = "clear";
-		ctx.textAlign = "center";
-		ctx.fillText(score, 940, 20);
-	
-	}*/
-	
 	function displayHealth()
 	{
 		
+		// Clears the area where the health is displayed
 		ctx.clearRect(665, 0, 100, 30);
 		ctx.font = "20px Calibri";
 		ctx.fillStyle = "green";
 		ctx.textAlign = "center";
+		// Writes the health value at the x, y positions stated here
 		ctx.fillText(health, 680, 20);
 		
 	}
 	
-	/*function deleteHealth()
-	{
-	
-		ctx.font = "20px Calibri";
-		ctx.color = "white";
-		//ctx.Alpha = 0;
-		ctx.textAlign = "center";
-		ctx.fillText(health, 720, 20);
-	
-	}*/
-	
 	function gameOver()
 	{
 		
+		// Sets game over to true
 		game_over = true;
 		
+		// Clears the canvas
 		ctx.clearRect(0, 0, width, height)
 		
-		
-		/*img.src = '';
-		imgPavement.src = '';
-		imgObstacles.src = '';
-		imgDumpTruck.src = '';
-		imgFence.src = '';
-		imgOilSpill.src = '';;
-		imgPage.src = '';*/
-		
-		/*delete(page[0]);
-		delete(oilSpill[0]);
-		delete(dumpTruck[0]);
-		delete(obstacles[0]);
-		delete(fence[0]);
-		delete(pavements[0]);
-		img.src = '';*/
-
+		// Writes out the "game over" with the score and the time
 		ctx.font = "20px Impact";
 		ctx.fillStyle = "black";
 		ctx.textAlign = "center";
@@ -970,7 +882,7 @@
 		ctx.fillText("Time: "+minutes+" : "+seconds.toFixed(0), 350, 20);
 		
 		
-		
+		// Allows the player to use keys to navigate back to the menu or to quit the game
 		// Press enter to go back to menu
 		if(keys[13])
 		{
@@ -990,14 +902,17 @@
 	
 	function gameSound(src)
 	{
-	
+		
+		// Creating and setting up the variables needed to use sound in the game
 		this.sound = document.createElement("audio");
+		// Allows for the sound source to be assigned
 		this.sound.src = src;
 		this.sound.setAttribute("preload", "auto");
 		this.sound.setAttribute("controls", "none");
 		this.sound.style.display = "none";
 		document.body.appendChild(this.sound);
 		
+		// Creates the play function to be able to play the music when called
 		this.play = function()
 		{
 		
@@ -1005,6 +920,7 @@
 		
 		}
 		
+		// Creates the play function to be able to play the sound effects when called
 		this.stop = function()
 		{
 		
@@ -1086,11 +1002,7 @@
 	
 	function showMenu(){
 		
-		//homescreenImage.src = "tempHomescreen.png";
-		//homescreenImage.addEventListener('load', e => {
-			//ctx.drawImage(homescreenImage, 0, 0, 820, 428);
-		//});
-		
+		// Writes out the text need for the menu: the title, controls, objectives, warnings and directions
 		ctx.font = "40px Impact";
 		ctx.fillStyle = "black";
 		ctx.textAlign = "center";
@@ -1121,27 +1033,27 @@
 		ctx.textAlign = "center";
 		ctx.fillText("QUIT", 322, 325);
 		
+		// Sets the playImage source to this image file
 		playImage.src = "playbutton.png";
+		// Creates the button using the image, positions and the dimensions
 		playImage.addEventListener('load', e => {
 			ctx.drawImage(playImage, buttonX[0], buttonY[0], buttonWidth[0], buttonHeight[0]);
 		});
-		
+		// Sets the quit source to this image file
 		quit.src = "quitbutton.png";
+		// Creates the button using the image, positions and the dimensions
 		quit.addEventListener('load', e => {
 			ctx.drawImage(quit, buttonX[1], buttonY[1], buttonWidth[1], buttonHeight[1]);
 		});
-		
-		/*replayImage.src = "playbutton.png";
-		replayImage.addEventListener('load', e => {
-			ctx.drawImage(replayImage, buttonX[2], buttonY[2], buttonWidth[2], buttonHeight[2]);
-		});*/
 		
 		canvas.addEventListener("mousemove", checkPos);
 		canvas.addEventListener("mouseup", checkClick);
 	}
 	
 	function checkPos(event){
+		// Sets the coords variable to the mouse position
 		coords = canvas.relMouseCoords(event);
+		// Sets the mouseX and mouseY variables to the mouse's x, y positions
 		mouseX = coords.x;
 		mouseY = coords.y
 	}
@@ -1169,24 +1081,20 @@
 		}
 	
 	function checkClick(mouseEvent){
+		// If the play button is clicked then the startGame method will be called
 		if(mouseX > buttonX[0] && mouseX < (buttonX[0] + buttonWidth[0])){
 			if (mouseY > buttonY[0] && mouseY < (buttonY[0] + buttonHeight[0])) {
 				buttonClicked = 1;
 				startGame();
 			}
 		}
+		// If the quit button is clicked then the quitGame method will be called
 		if(mouseX > buttonX[1] && mouseX < (buttonX[1] + buttonWidth[1])){
 			if (mouseY > buttonY[1] && mouseY < (buttonY[1] + buttonHeight[1])) {
 				buttonClicked = 2;
 				quitGame();
 			}
 		}
-		/*if(mouseX > buttonX[2] && mouseX < (buttonX[2] + buttonWidth[2]));{
-			if (mouseY > buttonY[2] && mouseY < (buttonY[2] + buttonHeight[2])) {
-				buttonClicked = 3;
-				startGame();
-			}
-		}*/
 		
 		if (buttonClicked > 0){
 			canvas.removeEventListener("mousemove", checkPos);
