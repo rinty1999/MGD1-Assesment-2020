@@ -150,6 +150,8 @@
 		//setInterval(increaseTime(), 1000);
 		
 		_music = new gameSound("themesong.mp3");
+		_sound = new gameSound("pickup.mp3");
+		
 		_music.play();
 		
 		
@@ -719,6 +721,7 @@
 				{
 				
 					score += 1;
+					_sound.play();
 					delete(page[0]);
 					//score += 1;
 					gameOver();
@@ -729,6 +732,7 @@
 				{
 					delete(page[i]);
 					//deleteScore();
+					_sound.play();
 					score += 1;
 					displayScore();
 					//increaseTime();
@@ -744,6 +748,7 @@
 				if(page[i] == page[0])
 				{
 				
+					_sound.play();
 					score += 1;
 					delete(page[0]);
 					//score += 1;
@@ -755,6 +760,7 @@
 				{
 					delete(page[i]);
 					//deleteScore();
+					_sound.play();
 					score += 1;
 					displayScore();
 					//increaseTime();
